@@ -36,6 +36,10 @@ notification.mp3
 /config_states/
 /node_modules
 /package-lock.json
-/.coverage*
 /test/test_outputs
+/test/results.xml
 /cache
+/.coverage*
+**/tests/**/expectations
+output/*
+.env
