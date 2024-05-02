@@ -361,6 +361,10 @@ class Api:
                     # min between arg length in scriptrunner and arg length in the request
                     for idx in range(0, min((alwayson_script.args_to - alwayson_script.args_from), len(request.alwayson_scripts[alwayson_script_name]["args"]))):
                         script_args[alwayson_script.args_from + idx] = request.alwayson_scripts[alwayson_script_name]["args"][idx]
+                if alwayson_script_name == 'ControlNet':
+                    request.alwayson_scripts[alwayson_script_name]['args'][0]['image']['image'] = np.array(decode_base64_to_image(request.alwayson_scripts[alwayson_script_name]['args'][0]['image']['image'])).astype('uint8')
+                    request.alwayson_scripts[alwayson_script_name]['args'][0]['image']['mask'] = np.zeros(request.alwayson_scripts[alwayson_script_name]['args'][0]['image']['image'].shape, dtype='uint8')
+                
         return script_args
 
     def apply_infotext(self, request, tabname, *, script_runner=None, mentioned_script_args=None):
@@ -565,7 +569,8 @@ class Api:
             img2imgreq.init_images = None
             img2imgreq.mask = None
 
-        return models.ImageToImageResponse(images=b64images, parameters=vars(img2imgreq), info=processed.js())
+        # return models.ImageToImageResponse(images=b64images, parameters=vars(img2imgreq), info=processed.js())
+        return models.ImageToImageResponse(images=b64images, parameters={}, info=processed.js())
 
     def extras_single_image_api(self, req: models.ExtrasSingleImageRequest):
         reqDict = setUpscalers(req)
