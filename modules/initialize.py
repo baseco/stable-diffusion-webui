@@ -147,6 +147,7 @@ def initialize_rest(*, reload_script_modules=False):
         devices.torch_npu_set_device()
 
         shared.sd_model  # noqa: B018
+        shared.init_sd_models()
 
         if sd_hijack.current_optimizer is None:
             sd_hijack.apply_optimizations()
