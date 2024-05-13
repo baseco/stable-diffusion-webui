@@ -173,6 +173,22 @@ class Shared(sys.modules[__name__].__class__):
         import modules.sd_models
 
         return modules.sd_models.model_data.get_sd_model()
+    
+    def init_sd_model1(self):
+        import modules.sd_models
+        if self.cmd_opts.ckpt1 is not None:
+            filename = self.cmd_opts.ckpt1
+            checkpoint_info = modules.sd_models.CheckpointInfo(filename)
+            modules.sd_models.model_data.sd_model = None
+            modules.sd_models.load_model(checkpoint_info)
+
+    def init_sd_model2(self):
+        import modules.sd_models
+        if self.cmd_opts.ckpt2 is not None:
+            filename = self.cmd_opts.ckpt2
+            checkpoint_info = modules.sd_models.CheckpointInfo(filename)
+            modules.sd_models.model_data.sd_model = None
+            modules.sd_models.load_model(checkpoint_info)
 
     @sd_model.setter
     def sd_model(self, value):
